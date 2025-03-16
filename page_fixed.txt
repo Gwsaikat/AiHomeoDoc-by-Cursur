@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { 
   FaCheckCircle, FaArrowRight, FaStethoscope, FaLaptopMedical, 
   FaFileMedical, FaVideo, FaChartLine, FaDiagnoses, FaPills, 
-  FaStar, FaLeaf, FaHeart, FaBrain, FaShieldAlt, FaUsers, FaUserMd, FaCalendarCheck, FaHeartbeat, FaGlobe, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaChevronRight, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaCookieBite, FaExclamationTriangle, FaFileContract, FaCreditCard, FaUndoAlt, FaHeadset, FaCheck, FaClock, FaAward, FaUserCheck, FaLock, FaCalendarAlt, FaGift, FaSearch
+  FaStar, FaLeaf, FaHeart, FaBrain, FaShieldAlt, FaUsers, FaUserMd, FaCalendarCheck, FaHeartbeat, FaGlobe, FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaChevronRight, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaCookieBite, FaExclamationTriangle, FaFileContract, FaCreditCard, FaUndoAlt, FaHeadset, FaCheck, FaClock, FaAward, FaUserCheck, FaLock, FaCalendarAlt, FaGift
 } from 'react-icons/fa';
 
 // Animation variants
@@ -38,71 +38,64 @@ type FloatingIconProps = {
   scale?: number;
 };
 
-// Enhanced floating animation variants - simplified for performance
+// Enhanced floating animation variants
 const floatingAnimation = {
   initial: { y: 0 },
   animate: {
-    y: [-3, 3, -3], // Reduced range for smoother animation
+    y: [-5, 5, -5],
     transition: {
       duration: 4,
       repeat: Infinity,
-      ease: "linear" // Changed to linear for better performance
+      ease: "easeInOut"
     }
   }
 };
 
-// Enhanced particle animation - optimized for performance
+// Enhanced particle animation
 const Particle = ({ delay = 0, size = 2, color = "blue" }) => {
-  // Memoize size and color classes to prevent recomputation
-  const sizeClass = useMemo(() => {
-    return size <= 1 ? "w-1 h-1" : size <= 2 ? "w-2 h-2" : "w-3 h-3";
-  }, [size]);
-  
-  const colorClass = useMemo(() => {
-    return color === "blue" ? "bg-blue-400" : 
-           color === "indigo" ? "bg-indigo-400" : "bg-purple-400";
-  }, [color]);
+  const sizeClass = size <= 1 ? "w-1 h-1" : size <= 2 ? "w-2 h-2" : "w-3 h-3";
+  const colorClass = color === "blue" ? "bg-blue-400" : color === "indigo" ? "bg-indigo-400" : "bg-purple-400";
   
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
       animate={{ 
         opacity: [0, 0.5, 0],
-        scale: [0, 1.2, 0],
-        y: -40,
+        scale: [0, 1.5, 0],
+        y: [-20, -60],
+        x: [-20, 20]
       }}
       transition={{
         duration: 3,
         delay,
         repeat: Infinity,
-        ease: "linear" // Linear easing is more performance-friendly
+        ease: "easeOut"
       }}
       className={`absolute ${sizeClass} rounded-full ${colorClass} blur-sm`}
-      style={{ willChange: 'transform, opacity' }}
+      style={{
+        filter: 'blur(8px)'
+      }}
     />
   );
 };
 
-// Floating Icon component - optimized for performance
+// Floating Icon component with TypeScript types
 const FloatingIcon: React.FC<FloatingIconProps> = ({ icon: Icon, color, delay = 0, scale = 1 }) => {
   return (
     <motion.div
       variants={floatingAnimation}
       initial="initial"
       animate="animate"
+      style={{ originY: 0.5 }}
       transition={{ delay }}
-      className={`absolute ${color} text-2xl`}
-      style={{ 
-        transform: `scale(${scale})`,
-        willChange: 'transform'
-      }}
+      className={`absolute ${color} text-2xl transform`}
     >
-      <Icon />
+      <Icon style={{ transform: `scale(${scale})` }} />
     </motion.div>
   );
 };
 
-// Enhanced Hero section with mobile optimization
+// Enhanced Hero section with more professional animations
 const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [currentText, setCurrentText] = useState(0);
@@ -120,201 +113,181 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative min-h-[100vh] w-full flex items-center justify-center overflow-hidden bg-black" style={{ contain: 'paint layout size' }}>
-      {/* Optimized 3D background with fewer animations */}
-      <div className="absolute inset-0" style={{ willChange: 'transform', transform: 'translateZ(0)' }}>
-        {/* Simplified gradient mesh with fewer animations */}
-        <div
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50">
+      {/* Enhanced 3D background effect */}
+      <div className="absolute inset-0 transform-gpu">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle at 30% 40%, rgba(59, 130, 246, 0.3) 0%, rgba(99, 102, 241, 0.2) 20%, rgba(139, 92, 246, 0.1) 40%, rgba(0, 0, 0, 0) 60%)',
-            opacity: 0.8,
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.3) 0%, rgba(217, 70, 239, 0.2) 20%, rgba(139, 92, 246, 0.1) 40%, rgba(0, 0, 0, 0) 60%)',
-            opacity: 0.8,
-          }}
-        />
-
-        {/* Static neural network background */}
-        <div className="absolute inset-0 opacity-30">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="neuralGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.6" />
-                <stop offset="50%" stopColor="#8B5CF6" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#EC4899" stopOpacity="0.6" />
-              </linearGradient>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#neuralPatternGradient)" />
-          </svg>
-        </div>
-
-        {/* Simplified glowing orb */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.4) 0%, transparent 70%)',
-            opacity: 0.6,
+            background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0.1) 25%, rgba(99, 102, 241, 0.05) 50%, transparent 100%)',
+            filter: 'blur(40px)'
           }}
         />
       </div>
 
-      {/* Reduced static particles */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
+      {/* Enhanced floating particles */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
             key={i}
-            className="absolute rounded-full bg-white"
+            className="absolute rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 blur-sm opacity-30"
             style={{
-              width: Math.random() * 3 + 1 + 'px',
-              height: Math.random() * 3 + 1 + 'px',
+              width: Math.random() * 4 + 2 + 'px',
+              height: Math.random() * 4 + 2 + 'px',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.4 + 0.2,
-              filter: 'blur(1px)',
+            }}
+            animate={{ 
+              y: [-20, -40],
+              opacity: [0.2, 0.5, 0.2],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: i * 0.2,
+              ease: "easeInOut"
             }}
           />
         ))}
       </div>
 
-      {/* Simplified 3D grid - static */}
-      <div className="absolute inset-0 z-0 opacity-30 pointer-events-none hidden sm:block">
-        <div className="h-full w-full" 
-             style={{
-               backgroundImage: 'linear-gradient(to right, rgba(99, 102, 241, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(99, 102, 241, 0.1) 1px, transparent 1px)',
-               backgroundSize: '40px 40px',
-               backgroundPosition: 'center',
-               perspective: '1000px',
-               transform: 'rotateX(60deg)',
-               transformOrigin: 'bottom',
-             }}>
-        </div>
-      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative"
+        >
+          {/* Enhanced title animation */}
+          <AnimatePresence mode="wait">
+              <motion.h1
+              key={currentText}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+              className="text-6xl sm:text-8xl font-extrabold relative"
+            >
+              <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 animate-gradient">
+                {headlines[currentText]}
+              </span>
+              <motion.span
+                className="absolute inset-0 bg-gradient-to-r from-blue-200 to-indigo-200 blur-3xl opacity-30"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              </motion.h1>
+          </AnimatePresence>
 
-      {/* Main content with mobile optimization */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="relative">
-          {/* Title card with mobile optimization */}
-          <div
-            className="relative backdrop-blur-xl bg-white/10 p-4 sm:p-8 rounded-2xl border border-white/20 shadow-2xl overflow-hidden"
-            style={{
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px 5px rgba(99, 102, 241, 0.2)',
-              transform: 'translateZ(0)',
-            }}
+          {/* Enhanced subtitle with gradient text */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-8 text-xl sm:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-gray-600 to-gray-500 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            {/* Static glow accent */}
-            <div
-              className="absolute -inset-2 opacity-30"
-              style={{
-                background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.7) 0%, transparent 70%)',
-              }}
-            />
+            Experience the perfect harmony of ancient wisdom and modern technology
+            for personalized, holistic healthcare solutions.
+          </motion.p>
 
-            {/* Fixed height headlines container with mobile optimization */}
-            <div className="h-[80px] sm:h-[110px] flex items-center justify-center mb-4">
-              <AnimatePresence mode="wait">
-                <motion.h1
-                  key={currentText}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-center relative"
-                  style={{ transform: 'translateZ(0)' }}
-                >
-                  <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-br from-white via-indigo-300 to-purple-200">
-                    {headlines[currentText]}
-                  </span>
-                </motion.h1>
-              </AnimatePresence>
-            </div>
-
-            {/* Subtitle with mobile optimization */}
-            <p className="text-base sm:text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-indigo-200 max-w-3xl mx-auto text-center leading-relaxed font-medium px-2 sm:px-4">
-              Experience the perfect harmony of ancient wisdom and modern technology
-              for personalized, holistic healthcare solutions.
-            </p>
-          </div>
-
-          {/* CTA buttons with mobile optimization */}
-          <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-            <div className="relative group w-full sm:w-auto">
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur opacity-70 group-hover:opacity-100 transition duration-200"></div>
+          {/* Enhanced CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative group"
+            >
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
               <Link
                 href="/auth"
-                className="relative w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-full text-white bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-700 hover:via-purple-700 hover:to-indigo-800 transform transition-all duration-200 overflow-hidden group"
+                className="relative inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transform transition-all duration-200"
               >
-                <span className="relative z-10 flex items-center">
-                  Start Your Journey
-                  <span className="ml-2 sm:ml-3">
-                    <FaArrowRight />
-                  </span>
-                </span>
+                Start Your Journey
+                <FaArrowRight className="ml-3" />
               </Link>
-            </div>
+            </motion.div>
 
-            <div className="relative group w-full sm:w-auto">
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-200"></div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative group"
+            >
               <Link
                 href="/auth"
-                className="relative w-full sm:w-auto inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-medium rounded-full text-white border border-indigo-500/50 bg-black/50 backdrop-blur-md hover:bg-black/70 transform transition-all duration-200"
+                className="relative inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-blue-600 bg-white border-2 border-blue-500/50 hover:bg-blue-50 transform transition-all duration-200"
               >
                 Sign In
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Stats cards with mobile optimization */}
-          <div className="mt-12 sm:mt-20 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+          {/* Enhanced floating stats - reduced animations for performance */}
+          <div className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {[
               { label: 'Active Users', value: '10,000+', icon: FaUsers },
               { label: 'Success Rate', value: '95%', icon: FaChartLine },
               { label: 'Expert Doctors', value: '100+', icon: FaUserMd },
               { label: 'Daily Consultations', value: '500+', icon: FaCalendarCheck }
             ].map((stat, index) => (
-              <div
+              <motion.div
                 key={stat.label}
-                className="relative group h-[120px] sm:h-[140px]"
-                style={{ transform: 'translateZ(0)' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                className="relative group"
               >
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-xl sm:rounded-2xl blur opacity-50 group-hover:opacity-75 transition duration-200"></div>
-                <div className="relative bg-black/30 backdrop-blur-xl rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-white/10 h-full overflow-hidden">                  
-                  <div className="flex flex-col items-center justify-center h-full relative z-10">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3">
-                      <stat.icon className="text-white text-base sm:text-xl" />
-                    </div>
-                    <div className="text-lg sm:text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-purple-300">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="relative bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/50"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-3">
+                    <stat.icon className="text-blue-600 text-xl" />
+                  </div>
+                    <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
                       {stat.value}
                     </div>
-                    <div className="text-[10px] sm:text-xs md:text-sm text-indigo-200 mt-0.5 sm:mt-1 font-medium text-center">
-                      {stat.label}
-                    </div>
+                    <div className="text-sm text-gray-600 mt-1 font-medium">{stat.label}</div>
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Static wave background */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none">
+      {/* Simplified animated wave background */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
+          <path
+            fill="url(#gradient)"
+            d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,128C672,107,768,85,864,90.7C960,96,1056,128,1152,133.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            opacity="0.2"
+          />
           <defs>
-            <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(99, 102, 241, 0.3)" />
-              <stop offset="50%" stopColor="rgba(139, 92, 246, 0.3)" />
-              <stop offset="100%" stopColor="rgba(236, 72, 153, 0.3)" />
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: 'rgb(99, 102, 241)', stopOpacity: 0.3 }} />
+              <stop offset="50%" style={{ stopColor: 'rgb(139, 92, 246)', stopOpacity: 0.3 }} />
+              <stop offset="100%" style={{ stopColor: 'rgb(59, 130, 246)', stopOpacity: 0.3 }} />
             </linearGradient>
           </defs>
-          <path
-            fill="url(#waveGradient)"
-            d="M0,128L48,154.7C96,181,192,235,288,224C384,213,480,139,576,128C672,117,768,171,864,197.3C960,224,1056,224,1152,202.7C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-          />
         </svg>
       </div>
     </div>
@@ -1300,6 +1273,17 @@ const SubscriptionSection = () => {
                   </div>
                 </div>
 
+            {/* Enhanced free sessions badge - adjusted position */}
+            <div className="absolute -left-2 top-32 z-20 hidden">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 blur-sm opacity-75"></div>
+                <div className="relative bg-gradient-to-r from-green-400 to-emerald-500 px-4 py-2 text-white font-bold rounded-r-full shadow-lg border border-green-300/50 flex items-center gap-2">
+                  <FaGift className="text-yellow-300" />
+                  <span>6 FREE Expert Sessions</span>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-gradient-to-br from-purple-800 via-indigo-900 to-purple-900 p-8">
               <div className="flex justify-between items-start">
                 <div>
@@ -1386,415 +1370,336 @@ const SubscriptionSection = () => {
 
                 {/* Added green tag at bottom */}
                 <div className="mt-auto">
-                  <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold px-5 py-2 rounded-md shadow-lg flex items-center border border-green-400/30">
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-bold px-5 py-2 rounded-md shadow-lg flex items-center border border-green-400/30 mb-3">
                     <FaCheckCircle className="mr-2 text-green-200" />
                     First month free with yearly plan
                   </div>
-                </div>
-                </div>
-              </div>
-            </motion.div>
-        </div>
-
-        {/* Enhanced Pay as you go options with more colors and attractive UI */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto"
-        >
-          {/* Health Reports Box - Enhanced with more vibrant gradient */}
-          <div className="bg-gradient-to-br from-pink-500 via-pink-600 to-purple-700 rounded-2xl p-0.5 shadow-xl overflow-hidden">
-            <div className="backdrop-blur-md rounded-2xl p-8 h-full flex flex-col bg-white/5 relative overflow-hidden">
-              {/* Enhanced background effects */}
-              <div className="absolute top-0 right-0 rounded-full w-40 h-40 bg-pink-500 filter blur-3xl opacity-20 animate-pulse"></div>
-              <div className="absolute bottom-0 left-0 rounded-full w-40 h-40 bg-purple-500 filter blur-3xl opacity-20 animate-pulse"></div>
-              
-              <div className="flex items-center mb-6">
-                <div className="bg-gradient-to-br from-pink-400 to-purple-500 w-14 h-14 rounded-xl flex items-center justify-center mr-4 shadow-lg transform hover:scale-105 transition-transform">
-                  <FaFileMedical className="text-white text-2xl" />
+                  
+                  {/* 6 FREE Expert Sessions badge moved to bottom */}
+                  <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-sm font-bold px-5 py-2 rounded-md shadow-lg flex items-center border border-green-300/50">
+                    <FaGift className="mr-2 text-yellow-300" />
+                    6 FREE Expert Sessions
                   </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Detailed AI Health Reports</h3>
-                  <p className="text-pink-100 text-sm">Pay per report, no subscription required</p>
                 </div>
-              </div>
-              <div className="flex justify-between items-end mb-6 relative z-10">
-                <div className="flex items-baseline">
-                  <div className="text-3xl font-bold text-white">₹19</div>
-                  <span className="text-lg font-normal text-pink-200 ml-1">/report</span>
-                </div>
-                <div className="px-3 py-1 rounded-full bg-gradient-to-r from-yellow-400 to-pink-400 text-xs font-semibold text-black shadow-md">Save 70% with yearly plan</div>
-              </div>
-              <p className="text-white mb-8 relative z-10 flex-grow">Comprehensive health analysis with personalized remedy recommendations based on your symptoms and health data.</p>
-              <motion.button
-                whileHover={{ scale: 1.02, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-xl font-medium text-base relative overflow-hidden"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 opacity-80 hover:opacity-90 transition-opacity"></span>
-                <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-white/20 to-transparent blur top-1/2 left-0 right-0 h-[1px]"></span>
-                <span className="relative z-10 text-white flex items-center justify-center">
-                  Purchase Report
-                  <FaArrowRight className="ml-2" />
-                </span>
-              </motion.button>
-            </div>
-          </div>
 
-          {/* Expert Consultations Box - Enhanced with more vibrant gradient */}
-          <div className="bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 rounded-2xl p-0.5 shadow-xl overflow-hidden">
-            <div className="backdrop-blur-md rounded-2xl p-8 h-full flex flex-col bg-white/5 relative overflow-hidden">
-              {/* Enhanced background effects */}
-              <div className="absolute top-0 right-0 rounded-full w-40 h-40 bg-teal-500 filter blur-3xl opacity-20 animate-pulse"></div>
-              <div className="absolute bottom-0 left-0 rounded-full w-40 h-40 bg-emerald-500 filter blur-3xl opacity-20 animate-pulse"></div>
-              
-              <div className="flex items-center mb-6">
-                <div className="bg-gradient-to-br from-teal-400 to-emerald-500 w-14 h-14 rounded-xl flex items-center justify-center mr-4 shadow-lg transform hover:scale-105 transition-transform">
-                  <FaVideo className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Expert Video Consultations</h3>
-                  <p className="text-teal-100 text-sm">Pay per session, speak with real experts</p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center mb-8 relative z-10">
-                <div className="flex items-baseline">
-                  <div className="text-3xl font-bold text-white">₹29</div>
-                  <span className="text-lg font-normal text-teal-200 ml-1">/session</span>
-                </div>
-                <div className="ml-6 px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-green-400 text-xs font-semibold text-black shadow-md whitespace-nowrap">
-                  Free sessions with yearly plan
-                </div>
-              </div>
-              <p className="text-white mb-8 relative z-10 flex-grow">Connect with qualified homeopathic practitioners through secure video consultations for personalized advice and treatment plans.</p>
-              <motion.button
-                whileHover={{ scale: 1.02, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-xl font-medium text-base relative overflow-hidden mb-6"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-500 opacity-80 hover:opacity-90 transition-opacity"></span>
-                <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-white/20 to-transparent blur top-1/2 left-0 right-0 h-[1px]"></span>
-                <span className="relative z-10 text-white flex items-center justify-center">
-                  Book Consultation
-                  <FaArrowRight className="ml-2" />
-                </span>
-              </motion.button>
-              
-              {/* Green tag at bottom of white area */}
-              <div className="mt-auto">
-                <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-medium px-4 py-1.5 rounded-md shadow-md flex items-center">
-                  <FaCheckCircle className="mr-2 text-green-200" />
-                  First session free with new sign up
-                </div>
-              </div>
-                </div>
-              </div>
-            </motion.div>
-
-        {/* Social proof and guarantees */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-16 bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 mx-auto max-w-4xl"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
-            <div className="flex items-center">
-              <div className="bg-white/20 p-3 rounded-full mr-4">
-                <FaShieldAlt className="text-white text-xl" />
-        </div>
-              <div>
-                <h4 className="text-white font-medium">30-Day Guarantee</h4>
-                <p className="text-indigo-100 text-sm">Full refund if not satisfied</p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="bg-white/20 p-3 rounded-full mr-4">
-                <FaUserCheck className="text-white text-xl" />
-              </div>
-              <div>
-                <h4 className="text-white font-medium">10,000+ Users</h4>
-                <p className="text-indigo-100 text-sm">Join our growing community</p>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="bg-white/20 p-3 rounded-full mr-4">
-                <FaLock className="text-white text-xl" />
-              </div>
-              <div>
-                <h4 className="text-white font-medium">Secure & Private</h4>
-                <p className="text-indigo-100 text-sm">Your data stays protected</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Final CTA */}
-          <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 text-center"
-        >
-          <h3 className="text-2xl font-bold text-white mb-6">
-            Start Your Transformation Today
-          </h3>
-          <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Don't wait for your health to deteriorate. Take control now with AI-powered homeopathic care.
-            <span className="block mt-2">
-              <span className="font-semibold text-yellow-300">95%</span> of our users report significant improvements within <span className="font-semibold text-yellow-300">30 days</span>.
-            </span>
-          </p>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-block"
-          >
-              <Link 
-                href="/auth" 
-              className="relative inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-indigo-700 bg-white hover:bg-gray-50 shadow-2xl transform transition-all duration-300 overflow-hidden group"
-            >
-              <span className="relative z-10 flex items-center">
-                Get Started Now
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="ml-2"
-                >
-                  <FaArrowRight />
-                </motion.span>
-              </span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-yellow-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={false}
-                animate={{ rotate: isHovering ? [0, 5, -5, 0] : 0 }}
-                transition={{ duration: 0.5 }}
-              />
-              </Link>
-          </motion.div>
-          <p className="mt-4 text-indigo-200 text-sm">
-            Your journey to better health is just one click away
-          </p>
-          </motion.div>
-        </div>
-      </section>
-  );
-};
-
-// New Health Services component with symmetrically designed cards
-const HealthServicesSection = () => {
-  return (
-    <section className="py-16 bg-gradient-to-b from-black to-gray-900 relative overflow-hidden">
-      {/* Background effects remain the same */}
-      <div className="absolute inset-0 z-0">
-        <motion.div
-          animate={{
-            opacity: [0.5, 0.7, 0.5],
-            scale: [1, 1.05, 1]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"
-        />
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.2) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.2) 0%, transparent 40%)' 
-        }} />
-            </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Choose Your Path to Wellness
-          </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            Our AI-powered solutions provide personalized healthcare experiences tailored to your specific needs
-          </p>
-        </motion.div>
-
-        {/* Main cards container with fixed heights */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {/* Cards with identical structure and fixed heights */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-500 to-indigo-700 h-[350px]"
-          >
-            <div className="flex flex-col h-full">
-              <div className="p-8 pb-4">
-              <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <FaUserMd className="text-white text-3xl" />
-                    </motion.div>
-                </div>
-                  <h3 className="ml-4 text-2xl font-bold text-white">AI Doctor Consultation</h3>
-              </div>
-              
-                <p className="text-lg text-blue-100">
-                  Get instant AI-powered health analysis and homeopathic treatment recommendations
-                </p>
-              </div>
-              
-              {/* Fixed button container */}
-              <div className="mt-auto p-8 pt-4">
+                {/* Enhanced Pay as you go options with more colors and attractive UI */}
                 <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto"
                 >
-                  <a 
-                    href="/consultation"
-                    className="block w-full"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = '/consultation';
-                    }}
-                  >
-                    <button 
-                      className="w-full h-[56px] bg-white hover:bg-blue-50 text-blue-600 font-medium rounded-xl flex items-center justify-center transition-all duration-300 group shadow-xl"
-                    >
-                      <motion.span
-                        className="flex items-center"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 5 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  {/* Health Reports Box - Enhanced with more vibrant gradient */}
+                  <div className="bg-gradient-to-br from-pink-500 via-pink-600 to-purple-700 rounded-2xl p-0.5 shadow-xl overflow-hidden">
+                    <div className="backdrop-blur-md rounded-2xl p-8 h-full flex flex-col bg-white/5 relative overflow-hidden">
+                      {/* Enhanced background effects */}
+                      <div className="absolute top-0 right-0 rounded-full w-40 h-40 bg-pink-500 filter blur-3xl opacity-20 animate-pulse"></div>
+                      <div className="absolute bottom-0 left-0 rounded-full w-40 h-40 bg-purple-500 filter blur-3xl opacity-20 animate-pulse"></div>
+                      
+                      <div className="flex items-center mb-6">
+                        <div className="bg-gradient-to-br from-pink-400 to-purple-500 w-14 h-14 rounded-xl flex items-center justify-center mr-4 shadow-lg transform hover:scale-105 transition-transform">
+                          <FaFileMedical className="text-white text-2xl" />
+                          </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Detailed AI Health Reports</h3>
+                          <p className="text-pink-100 text-sm">Pay per report, no subscription required</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-end mb-6 relative z-10">
+                        <div className="flex items-baseline">
+                          <div className="text-3xl font-bold text-white">₹19</div>
+                          <span className="text-lg font-normal text-pink-200 ml-1">/report</span>
+                        </div>
+                        <div className="px-3 py-1 rounded-full bg-gradient-to-r from-yellow-400 to-pink-400 text-xs font-semibold text-black shadow-md">Save 70% with yearly plan</div>
+                      </div>
+                      <p className="text-white mb-8 relative z-10 flex-grow">Comprehensive health analysis with personalized remedy recommendations based on your symptoms and health data.</p>
+                      <motion.button
+                        whileHover={{ scale: 1.02, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-4 rounded-xl font-medium text-base relative overflow-hidden"
                       >
-                        <FaStethoscope className="mr-2" />
-                        Start Consultation
-                        <motion.div
-                          className="ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
-                          transition={{ duration: 0.2 }}
+                        <span className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-500 opacity-80 hover:opacity-90 transition-opacity"></span>
+                        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-white/20 to-transparent blur top-1/2 left-0 right-0 h-[1px]"></span>
+                        <span className="relative z-10 text-white flex items-center justify-center">
+                          Purchase Report
+                          <FaArrowRight className="ml-2" />
+                        </span>
+                      </motion.button>
+                    </div>
+                  </div>
+
+                  {/* Expert Consultations Box - Enhanced with more vibrant gradient */}
+                  <div className="bg-gradient-to-br from-teal-500 via-teal-600 to-emerald-700 rounded-2xl p-0.5 shadow-xl overflow-hidden">
+                    <div className="backdrop-blur-md rounded-2xl p-8 h-full flex flex-col bg-white/5 relative overflow-hidden">
+                      {/* Enhanced background effects */}
+                      <div className="absolute top-0 right-0 rounded-full w-40 h-40 bg-teal-500 filter blur-3xl opacity-20 animate-pulse"></div>
+                      <div className="absolute bottom-0 left-0 rounded-full w-40 h-40 bg-emerald-500 filter blur-3xl opacity-20 animate-pulse"></div>
+                      
+                      <div className="flex items-center mb-6">
+                        <div className="bg-gradient-to-br from-teal-400 to-emerald-500 w-14 h-14 rounded-xl flex items-center justify-center mr-4 shadow-lg transform hover:scale-105 transition-transform">
+                          <FaVideo className="text-white text-2xl" />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-white">Expert Video Consultations</h3>
+                          <p className="text-teal-100 text-sm">Pay per session, speak with real experts</p>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center mb-8 relative z-10">
+                        <div className="flex items-baseline">
+                          <div className="text-3xl font-bold text-white">₹29</div>
+                          <span className="text-lg font-normal text-teal-200 ml-1">/session</span>
+                        </div>
+                        <div className="ml-6 px-4 py-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-green-400 text-xs font-semibold text-black shadow-md whitespace-nowrap">
+                          Free sessions with yearly plan
+                        </div>
+                      </div>
+                      <p className="text-white mb-8 relative z-10 flex-grow">Connect with qualified homeopathic practitioners through secure video consultations for personalized advice and treatment plans.</p>
+                      <motion.button
+                        whileHover={{ scale: 1.02, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-4 rounded-xl font-medium text-base relative overflow-hidden mb-6"
+                      >
+                        <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-500 opacity-80 hover:opacity-90 transition-opacity"></span>
+                        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-white/20 to-transparent blur top-1/2 left-0 right-0 h-[1px]"></span>
+                        <span className="relative z-10 text-white flex items-center justify-center">
+                          Book Consultation
+                          <FaArrowRight className="ml-2" />
+                        </span>
+                      </motion.button>
+                      
+                      {/* Green tag at bottom of white area */}
+                      <div className="mt-auto">
+                        <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-sm font-medium px-4 py-1.5 rounded-md shadow-md flex items-center">
+                          <FaCheckCircle className="mr-2 text-green-200" />
+                          First session free with new sign up
+                        </div>
+                      </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                {/* Social proof and guarantees */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="mt-16 bg-white/10 backdrop-blur-md rounded-2xl p-6 md:p-8 mx-auto max-w-4xl"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-4">
+                    <div className="flex items-center">
+                      <div className="bg-white/20 p-3 rounded-full mr-4">
+                        <FaShieldAlt className="text-white text-xl" />
+            </div>
+                      <div>
+                        <h4 className="text-white font-medium">30-Day Guarantee</h4>
+                        <p className="text-indigo-100 text-sm">Full refund if not satisfied</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="bg-white/20 p-3 rounded-full mr-4">
+                        <FaUserCheck className="text-white text-xl" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">10,000+ Users</h4>
+                        <p className="text-indigo-100 text-sm">Join our growing community</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="bg-white/20 p-3 rounded-full mr-4">
+                        <FaLock className="text-white text-xl" />
+                      </div>
+                      <div>
+                        <h4 className="text-white font-medium">Secure & Private</h4>
+                        <p className="text-indigo-100 text-sm">Your data stays protected</p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Final CTA */}
+                  <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="mt-16 text-center"
+                >
+                  <h3 className="text-2xl font-bold text-white mb-6">
+                    Start Your Transformation Today
+                  </h3>
+                  <p className="text-indigo-100 mb-8 max-w-2xl mx-auto">
+                    Don't wait for your health to deteriorate. Take control now with AI-powered homeopathic care.
+                    <span className="block mt-2">
+                      <span className="font-semibold text-yellow-300">95%</span> of our users report significant improvements within <span className="font-semibold text-yellow-300">30 days</span>.
+                    </span>
+                  </p>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="inline-block"
+                  >
+                      <Link 
+                        href="/auth" 
+                      className="relative inline-flex items-center px-8 py-4 text-lg font-medium rounded-full text-indigo-700 bg-white hover:bg-gray-50 shadow-2xl transform transition-all duration-300 overflow-hidden group"
+                    >
+                      <span className="relative z-10 flex items-center">
+                        Get Started Now
+                        <motion.span
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="ml-2"
                         >
                           <FaArrowRight />
-                        </motion.div>
-                      </motion.span>
-                    </button>
-                  </a>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Health Analyzer Card - identical structure */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-emerald-500 to-teal-700 h-[350px]"
-          >
-            <div className="flex flex-col h-full">
-              <div className="p-8 pb-4">
-                <div className="flex items-center mb-6">
-                  <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <FaHeartbeat className="text-white text-3xl" />
-                    </motion.div>
-            </div>
-                  <h3 className="ml-4 text-2xl font-bold text-white">Health Analyzer</h3>
-            </div>
-            
-                <p className="text-lg text-emerald-100">
-                  Advanced symptom analysis and personalized wellness plan generation
-                </p>
-                  </div>
+                        </motion.span>
+                      </span>
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-yellow-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        initial={false}
+                        animate={{ rotate: isHovering ? [0, 5, -5, 0] : 0 }}
+                        transition={{ duration: 0.5 }}
+                      />
+                      </Link>
+                  </motion.div>
+                  <p className="mt-4 text-indigo-200 text-sm">
+                    Your journey to better health is just one click away
+                  </p>
+                  </motion.div>
+                </div>
+              </section>
+          );
+        };
+
+        export default function HomePage() {
+          return (
+            <div className="min-h-screen bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50">
+              <HeroSection />
+              <FeaturesSection />
+              <StatisticsSection />
+              <SubscriptionSection />
+              <TestimonialsSection />
+
+              {/* Footer */}
+              <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
+                {/* Footer background elements */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 opacity-75"></div>
+                  <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-900 rounded-full opacity-20 transform translate-x-1/2 translate-y-1/2"></div>
+                  <div className="absolute top-0 left-0 w-96 h-96 bg-blue-900 rounded-full opacity-20 transform -translate-x-1/2 -translate-y-1/2"></div>
+                    </div>
               
-              {/* Fixed button container - identical to above */}
-              <div className="mt-auto p-8 pt-4">
-                <motion.div
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <a 
-                    href="/analyzer"
-                    className="block w-full"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = '/analyzer';
-                    }}
-                  >
-                    <button 
-                      className="w-full h-[56px] bg-white hover:bg-green-50 text-emerald-600 font-medium rounded-xl flex items-center justify-center transition-all duration-300 group shadow-xl"
-                    >
-                      <motion.span
-                        className="flex items-center"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 5 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      >
-                        <FaSearch className="mr-2" />
-                        Analyze My Health
-                        <motion.div
-                          className="ml-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
-                          transition={{ duration: 0.2 }}
-                        >
-                          <FaArrowRight />
-                        </motion.div>
-                      </motion.span>
-                    </button>
-                  </a>
-                </motion.div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
+                    <div className="md:col-span-2">
+                      <div className="flex items-center mb-6">
+                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+                          <FaLeaf className="text-white text-xl" />
+                        </div>
+                        <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+                          AI Homeopathy
+                        </h3>
+                      </div>
+                      
+                      <p className="text-gray-400 mb-6 leading-relaxed">
+                        Combining the traditional wisdom of homeopathy with cutting-edge AI technology to provide personalized healthcare solutions for a balanced and healthy life.
+                      </p>
+                      
+                      <div className="flex space-x-4">
+                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                          <FaFacebookF className="text-white" />
+                        </a>
+                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                          <FaTwitter className="text-white" />
+                        </a>
+                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                          <FaInstagram className="text-white" />
+                        </a>
+                        <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+                          <FaLinkedinIn className="text-white" />
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold mb-6 text-indigo-300">Quick Links</h4>
+                      <ul className="space-y-3">
+                        <li><Link href="/" className="hover:text-white">Home</Link></li>
+                        <li><Link href="/about" className="hover:text-white">About Us</Link></li>
+                        <li><Link href="/features" className="hover:text-white">Features</Link></li>
+                        <li><Link href="/pricing" className="hover:text-white">Pricing</Link></li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold mb-6 text-indigo-300">Legal</h4>
+                      <ul className="space-y-3">
+                        <li><Link href="/privacy" className="hover:text-white">Privacy Policy</Link></li>
+                        <li><Link href="/terms" className="hover:text-white">Terms of Service</Link></li>
+                        <li><Link href="/disclaimer" className="hover:text-white">Medical Disclaimer</Link></li>
+                      </ul>
+                    </div>
+                    
+                    <div>
+                      <h4 className="text-lg font-semibold mb-6 text-indigo-300">Contact</h4>
+                      <ul className="space-y-4">
+                        <li className="flex items-start">
+                          <div className="text-indigo-400 mt-1 mr-3">
+                            <FaEnvelope />
+                          </div>
+                          <div>
+                            <p className="text-gray-400">Email</p>
+                            <a href="mailto:info@aihomeopathy.com" className="text-indigo-300 hover:text-white transition-colors">
+                              info@aihomeopathy.com
+                            </a>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="text-indigo-400 mt-1 mr-3">
+                            <FaPhoneAlt />
+                          </div>
+                          <div>
+                            <p className="text-gray-400">Phone</p>
+                            <a href="tel:+911234567890" className="text-indigo-300 hover:text-white transition-colors">
+                              +91 123-456-7890
+                            </a>
+                          </div>
+                        </li>
+                        <li className="flex items-start">
+                          <div className="text-indigo-400 mt-1 mr-3">
+                            <FaMapMarkerAlt />
+                          </div>
+                          <div>
+                            <p className="text-gray-400">Address</p>
+                            <p className="text-indigo-300">
+                              123 Wellness Street, Health City, India
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
+                  
+                  <div className="mt-16 pt-8 border-t border-gray-800">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
+                      <p className="text-gray-400 mb-4 md:mb-0">
+                        © {new Date().getFullYear()} AI Homeopathy. All rights reserved.
+                      </p>
+                      <div className="flex space-x-6">
+                        <Link href="/help" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                          Help Center
+                        </Link>
+                        <Link href="/faq" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                          FAQs
+                        </Link>
+                        <Link href="/support" className="text-gray-400 hover:text-indigo-300 transition-colors">
+                          Support
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-          </motion.div>
-                  </div>
-                  </div>
-    </section>
-  );
-};
-
-// Client-side only wrapper component to prevent hydration issues
-const ClientOnly: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  
-  if (!isMounted) {
-    return null;
-  }
-  
-  return <>{children}</>;
-};
-
-export default function HomePage() {
-  return (
-    <ClientOnly>
-      <div className="bg-white">
-        <HeroSection />
-        <HealthServicesSection />
-        <FeaturesSection />
-        <TestimonialsSection />
-        <StatisticsSection />
-        <SubscriptionSection />
-        
-        {/* Footer */}
-        <footer className="bg-gray-900 text-white py-16 relative overflow-hidden">
-          {/* Footer content */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <p className="text-center text-gray-400">© {new Date().getFullYear()} AI Homeopathy. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-    </ClientOnly>
-  );
-}
+                </div>
+              </footer>
+            </div>
+          );
+        }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Links - AI Homeopathy</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fb;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+        h1 {
+            color: #4F46E5;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .dashboard-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .dashboard-btn {
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .patient-btn {
+            background-color: #EFF6FF;
+            color: #1E40AF;
+            border: 2px solid #93C5FD;
+        }
+        .patient-btn:hover {
+            background-color: #DBEAFE;
+        }
+        .doctor-btn {
+            background-color: #F0F9FF;
+            color: #0369A1;
+            border: 2px solid #7DD3FC;
+        }
+        .doctor-btn:hover {
+            background-color: #E0F2FE;
+        }
+        .clinic-btn {
+            background-color: #F5F3FF;
+            color: #6D28D9;
+            border: 2px solid #C4B5FD;
+        }
+        .clinic-btn:hover {
+            background-color: #EDE9FE;
+        }
+        .info {
+            background-color: #FFFBEB;
+            border: 1px solid #FEF3C7;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .auth-link a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Homeopathy Dashboard Links</h1>
+        
+        <p>If you're experiencing issues with automatic redirection, you can use these direct links to access your dashboard:</p>
+        
+        <div class="dashboard-links">
+            <a href="/dashboard/patient" class="dashboard-btn patient-btn">Patient Dashboard</a>
+            <a href="/dashboard/doctor" class="dashboard-btn doctor-btn">Doctor Dashboard</a>
+            <a href="/dashboard/clinic" class="dashboard-btn clinic-btn">Clinic Dashboard</a>
+        </div>
+        
+        <div class="info">
+            <strong>Note:</strong> You still need to be logged in to access these dashboards. If you're not logged in, you'll be redirected to the sign-in page.
+        </div>
+        
+        <div class="auth-link">
+            <a href="/auth">Return to Sign In Page</a>
+        </div>
+    </div>
+    
+    <script>
+        // Script to attempt auto-detection of user role from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const userRole = localStorage.getItem('userRole');
+                if (userRole && ['patient', 'doctor', 'clinic'].includes(userRole)) {
+                    console.log('Detected user role:', userRole);
+                    // Highlight the appropriate button
+                    const btn = document.querySelector(`.${userRole}-btn`);
+                    if (btn) {
+                        btn.style.transform = 'scale(1.05)';
+                        btn.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                        btn.textContent += ' (Recommended)';
+                    }
+                }
+            } catch (e) {
+                console.error('Error detecting user role:', e);
+            }
+        });
+    </script>
+</body>
+</html> 

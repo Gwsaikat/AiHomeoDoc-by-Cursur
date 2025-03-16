@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirm Your AI Homeopathy Account</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    /* Base styles */
+    body {
+      font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333333;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      padding: 40px 30px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .logo {
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease-out;
+    }
+    
+    .logo img {
+      width: 180px;
+      height: auto;
+    }
+    
+    .header-content {
+      animation: slideUp 1s ease-out;
+    }
+    
+    h1 {
+      color: #ffffff;
+      font-weight: 600;
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+    
+    .subheader {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 18px;
+      margin-top: 12px;
+      font-weight: 300;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .content {
+      padding: 40px 30px;
+      background-color: #ffffff;
+      position: relative;
+    }
+    
+    .content-inner {
+      animation: fadeIn 1.5s ease-out;
+    }
+    
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #4B5563;
+      margin-bottom: 24px;
+    }
+    
+    .greeting {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1F2937;
+      margin-bottom: 20px;
+    }
+    
+    .button-container {
+      text-align: center;
+      margin: 40px 0 30px;
+    }
+    
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 16px 36px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+    
+    .button:hover {
+      box-shadow: 0 7px 15px rgba(139, 92, 246, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .user-info {
+      background-color: #F9FAFB;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      border: 1px solid #E5E7EB;
+    }
+    
+    .user-info p {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    
+    .info-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .info-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      fill: #6366F1;
+    }
+    
+    .info-title {
+      font-weight: 500;
+      font-size: 17px;
+      color: #1F2937;
+    }
+    
+    .support {
+      margin-top: 40px;
+      border-top: 1px solid #E5E7EB;
+      padding-top: 30px;
+      text-align: center;
+    }
+    
+    .footer {
+      background-color: #F9FAFB;
+      padding: 30px;
+      text-align: center;
+      border-top: 1px solid #E5E7EB;
+    }
+    
+    .social-links {
+      margin-bottom: 20px;
+    }
+    
+    .social-icon {
+      display: inline-block;
+      margin: 0 8px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #6366F1;
+      text-align: center;
+      line-height: 36px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icon img {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      filter: brightness(0) invert(1);
+    }
+    
+    .social-icon:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+    }
+    
+    .footer-text {
+      font-size: 14px;
+      color: #6B7280;
+      margin-top: 20px;
+    }
+    
+    .footer-link {
+      color: #6366F1;
+      text-decoration: none;
+    }
+    
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Decorative elements */
+    .circle-1, .circle-2, .circle-3 {
+      position: absolute;
+      border-radius: 50%;
+    }
+    
+    .circle-1 {
+      width: 80px;
+      height: 80px;
+      background-color: rgba(255, 255, 255, 0.1);
+      top: 30px;
+      left: -20px;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .circle-2 {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.15);
+      bottom: 20px;
+      right: 40px;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .circle-3 {
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.1);
+      top: 60px;
+      right: -20px;
+      animation: float 7s ease-in-out infinite 1s;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+      50% { box-shadow: 0 4px 20px rgba(139, 92, 246, 0.6); }
+      100% { box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0); }
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 600px) {
+      .container {
+        border-radius: 0;
+      }
+      
+      .header {
+        padding: 30px 20px;
+      }
+      
+      .content {
+        padding: 30px 20px;
+      }
+      
+      h1 {
+        font-size: 28px;
+      }
+      
+      .subheader {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="circle-1"></div>
+      <div class="circle-2"></div>
+      <div class="circle-3"></div>
+      
+      <div class="logo">
+        <img src="https://i.imgur.com/wdRPWQv.png" alt="AI Homeopathy Logo">
+      </div>
+      
+      <div class="header-content">
+        <h1>Confirm Your Email</h1>
+        <p class="subheader">You're just one step away from your holistic health journey</p>
+      </div>
+    </div>
+    
+    <div class="content">
+      <div class="content-inner">
+        <p class="greeting">Hello {{ .Email }},</p>
+        
+        <p>Thank you for choosing AI Homeopathy for your wellness journey. We're excited to have you join our community of individuals seeking natural healing and holistic health approaches.</p>
+        
+        <p>Please confirm your email address by clicking the button below:</p>
+        
+        <div class="button-container">
+          <a href="{{ .ConfirmationURL }}" class="button">Confirm Email Address</a>
+        </div>
+        
+        <p>This link will expire in 24 hours. If you did not create an account with AI Homeopathy, please disregard this email.</p>
+        
+        <div class="user-info">
+          <div class="info-header">
+            <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm1-11h-2v6h2v-6zm0-4h-2v2h2V5z"/>
+            </svg>
+            <span class="info-title">What happens next?</span>
+          </div>
+          <p>• Access personalized health assessments</p>
+          <p>• Connect with qualified homeopathic practitioners</p>
+          <p>• Track your wellness journey with AI-powered tools</p>
+          <p>• Receive customized natural remedy recommendations</p>
+        </div>
+        
+        <div class="support">
+          <p>If you have any questions or need assistance, our support team is here to help.</p>
+          <a href="mailto:support@aihomeopathy.com" class="footer-link">support@aihomeopathy.com</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <div class="social-links">
+        <a href="#" class="social-icon">
+          <img src="https://i.imgur.com/5tZqN8v.png" alt="Facebook">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="https://i.imgur.com/xRJ9l7K.png" alt="Twitter">
+        </a>
+        <a href="#" class="social-icon">
+          <img src="https://i.imgur.com/vGEpkEF.png" alt="Instagram">
+        </a>
+      </div>
+      
+      <p class="footer-text">© 2024 AI Homeopathy. All rights reserved.</p>
+      <p class="footer-text">
+        <a href="#" class="footer-link">Privacy Policy</a> • 
+        <a href="#" class="footer-link">Terms of Service</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html> 
