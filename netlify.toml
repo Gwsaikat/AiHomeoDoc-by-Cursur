@@ -1,11 +1,11 @@
 [build]
-  command = "npm ci && npm run build"
+  command = "npm ci && node netlify-build-helper.js"
   publish = ".next"
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NODE_VERSION = "20"
-  NPM_FLAGS = "--legacy-peer-deps --include=dev"
+  NPM_FLAGS = "--legacy-peer-deps"
   # Remove development mode to enable standard production build
   NEXT_TELEMETRY_DISABLED = "1"
   # Debug environment variables
