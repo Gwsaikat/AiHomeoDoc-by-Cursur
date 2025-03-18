@@ -13,6 +13,13 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  // Netlify specific settings
+  images: {
+    domains: ['randomuser.me', 'images.unsplash.com'],
+    unoptimized: process.env.NODE_ENV === 'production',
+  },
+  // Output for compatibility with Netlify
+  output: 'standalone',
 }
 
 module.exports = nextConfig 

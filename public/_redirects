@@ -1,0 +1,4 @@
+# Netlify redirects file
+# Redirects all routes to the Next.js app so client-side routing works
+
+/*    /index.html   200 
