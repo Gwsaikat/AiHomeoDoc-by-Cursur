@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && npm run build"
+  command = "npm ci && npm install --no-save --save-dev tailwindcss@3.4.1 postcss@8.4.35 autoprefixer@10.4.18 && npm run build"
   publish = ".next"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ./package-lock.json"
 
@@ -12,9 +12,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-[[plugins]]
-  package = "./netlify/plugins/tailwind-fix"
 
 # Don't use redirects here, rely on Next.js routing
 # The Next.js plugin handles this automatically 
