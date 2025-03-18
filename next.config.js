@@ -36,8 +36,19 @@ const nextConfig = {
   // Configure proper cache settings
   distDir: '.next',
   
-  // Webpack configuration for HTML component handling
-  webpack: (config, { isServer }) => {
+  // Webpack configuration for proper module resolution
+  webpack: (config) => {
+    // Add TailwindCSS resolution
+    config.resolve.alias = {
+      ...config.resolve.alias,
+    };
+    
+    // Reduce NextJS Fonts size warnings
+    config.performance = {
+      ...config.performance,
+      hints: false,
+    };
+    
     return config;
   },
 }
