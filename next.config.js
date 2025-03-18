@@ -21,24 +21,23 @@ const nextConfig = {
   // Output for compatibility with Netlify
   output: 'standalone',
   
-  // Skip prerendering for dashboard pages that require client-side auth
+  // Configure experimental features properly
   experimental: {
-    missingSuspenseWithCSRError: false,  // Disable the suspense error that was preventing the build
-    // Enable app directory error handling
-    serverActions: true,
+    // Configure proper server actions setup
+    serverComponentsExternalPackages: [],
+    serverActions: {
+      bodySizeLimit: '2mb'
+    }
   },
   
   // Set which pages are static and which are server-rendered
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
-  // Configure error handling
-  onError: (err) => {
-    console.error('Next.js build error:', err);
-  },
+  // Configure proper cache settings
+  distDir: '.next',
   
-  // Ensure proper handling of HTML component
+  // Webpack configuration for HTML component handling
   webpack: (config, { isServer }) => {
-    // Add any webpack configurations if needed
     return config;
   },
 }
