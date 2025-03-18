@@ -1,16 +1,15 @@
 [build]
-  command = "next build"
+  command = "npm run build"
   publish = ".next"
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NODE_VERSION = "20"
+  # Using Edge runtime for Next.js
+  NEXT_PRIVATE_TARGET = "server"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false 
+# Don't use redirects here, rely on Next.js routing
+# The Next.js plugin handles this automatically 
