@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -13,7 +13,7 @@ const errorMessages = {
   default: 'An error occurred during authentication. Please try again.'
 };
 
-export default function AuthErrorPage() {
+function ErrorPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [errorMessage, setErrorMessage] = useState('');
@@ -73,5 +73,20 @@ export default function AuthErrorPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-red-50 to-gray-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Loading...</h2>
+          <p className="text-gray-600">Please wait while we process your request.</p>
+        </div>
+      </div>
+    }>
+      <ErrorPageContent />
+    </Suspense>
   );
 } 
