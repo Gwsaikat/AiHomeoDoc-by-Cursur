@@ -2122,7 +2122,7 @@ export default function PatientDashboard() {
   
   // Function to fetch wellness data
   const fetchWellnessData = async () => {
-    setIsLoadingFeatureData(true);
+      setIsLoadingFeatureData(true);
     setFeatureDataError(null);
     
     try {
@@ -2307,19 +2307,19 @@ export default function PatientDashboard() {
               <span>Schedule New Appointment</span>
             </motion.button>
           </div>
-          
-          {featureDataError && (
+        
+        {featureDataError && (
             <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg">
-              <p>{featureDataError}</p>
-              <button 
-                onClick={fetchAppointments}
-                className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-          
+            <p>{featureDataError}</p>
+            <button 
+              onClick={fetchAppointments}
+              className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+        
           {/* Available Online Doctors Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-4">
@@ -2389,34 +2389,34 @@ export default function PatientDashboard() {
                   onClick={handleScheduleAppointment}
                   className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm"
                 >
-                  Schedule New Appointment
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4">
+              Schedule New Appointment
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
                 {upcomingAppointments.map((appointment, index) => (
                   <motion.div
-                    key={index}
+                key={index}
                     className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-all"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                  >
-                    <div className="flex justify-between">
-                      <div className="flex items-center">
+              >
+                <div className="flex justify-between">
+                  <div className="flex items-center">
                         <div className="h-14 w-14 rounded-full bg-indigo-100 flex items-center justify-center mr-4 overflow-hidden">
-                          {appointment.image ? (
+                      {appointment.image ? (
                             <img src={appointment.image} alt={appointment.doctor} className="h-full w-full object-cover" />
-                          ) : (
-                            <FaUserMd className="text-indigo-600 text-xl" />
-                          )}
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-medium text-gray-900">{appointment.doctor}</h3>
-                          <p className="text-gray-600 text-sm">{appointment.specialty}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
+                      ) : (
+                        <FaUserMd className="text-indigo-600 text-xl" />
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900">{appointment.doctor}</h3>
+                      <p className="text-gray-600 text-sm">{appointment.specialty}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
                         <div className="flex items-center space-x-1 mb-1 justify-end">
                           <FaClock className="text-indigo-500 text-xs" />
                           <span className="text-sm text-gray-700 font-medium">{appointment.time}</span>
@@ -2551,17 +2551,17 @@ export default function PatientDashboard() {
                       <div className="text-right">
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           appointment.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}>
-                          {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                        </span>
-                        <p className="text-gray-500 mt-1">
-                          {appointment.date} at {appointment.time}
-                        </p>
-                      </div>
-                    </div>
-                    {appointment.notes && (
-                      <p className="mt-3 text-gray-600 border-t border-gray-100 pt-2 text-sm">{appointment.notes}</p>
-                    )}
+                    }`}>
+                      {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
+                    </span>
+                    <p className="text-gray-500 mt-1">
+                      {appointment.date} at {appointment.time}
+                    </p>
+                  </div>
+                </div>
+                {appointment.notes && (
+                  <p className="mt-3 text-gray-600 border-t border-gray-100 pt-2 text-sm">{appointment.notes}</p>
+                )}
                     <div className="mt-3 flex justify-end space-x-2">
                       <motion.button 
                         className="px-3 py-1.5 text-sm bg-indigo-100 text-indigo-700 rounded-lg hover:bg-indigo-200 transition-colors flex items-center"
@@ -2577,11 +2577,11 @@ export default function PatientDashboard() {
                       >
                         <FaCalendarPlus className="mr-1 text-xs" /> Schedule Follow-up
                       </motion.button>
-                    </div>
+                </div>
                   </motion.div>
-                ))}
-              </div>
-            )}
+            ))}
+          </div>
+        )}
           </section>
         </div>
       </div>
@@ -2718,19 +2718,19 @@ export default function PatientDashboard() {
               <span>Request New Prescription</span>
             </motion.button>
           </div>
-          
-          {featureDataError && (
+        
+        {featureDataError && (
             <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg">
-              <p>{featureDataError}</p>
-              <button 
-                onClick={fetchPrescriptions}
-                className="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-              >
-                Try Again
-              </button>
-            </div>
-          )}
-          
+            <p>{featureDataError}</p>
+            <button 
+              onClick={fetchPrescriptions}
+              className="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+        
           {/* Today's Medication Schedule Section */}
           <section className="mb-8">
             <div className="flex items-center justify-between mb-4">
@@ -2833,18 +2833,18 @@ export default function PatientDashboard() {
                   onClick={handleRequestPrescription}
                   className="mt-3 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm"
                 >
-                  Request New Prescription
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              Request New Prescription
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {activePrescriptions.map((prescription, index) => {
                   const medInfo = getRelevantMedicationInfo(prescription.name);
                   const category = medicationCategories.find(c => c.id === medInfo.category);
                   
                   return (
                     <motion.div
-                      key={index}
+                key={index}
                       className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -2857,9 +2857,9 @@ export default function PatientDashboard() {
                           <span className="ml-2 text-sm font-medium text-gray-800">{medInfo.category.charAt(0).toUpperCase() + medInfo.category.slice(1)} Remedy</span>
                         </div>
                         <span className="px-2 py-1 bg-white rounded-full text-xs font-medium text-green-700">
-                          {prescription.status.charAt(0).toUpperCase() + prescription.status.slice(1)}
-                        </span>
-                      </div>
+                    {prescription.status.charAt(0).toUpperCase() + prescription.status.slice(1)}
+                  </span>
+                </div>
                       
                       <div className="p-4">
                         <div className="flex justify-between items-start">
@@ -2867,40 +2867,40 @@ export default function PatientDashboard() {
                         </div>
                         
                         <div className="mt-3 grid grid-cols-2 gap-y-2 gap-x-4 text-sm">
-                          <div>
+                  <div>
                             <span className="text-gray-500 inline-flex items-center">
                               <FaPills className="mr-1 h-3 w-3" /> Dosage:
                             </span>
-                            <span className="ml-1 text-gray-900">{prescription.dosage}</span>
-                          </div>
-                          <div>
+                    <span className="ml-1 text-gray-900">{prescription.dosage}</span>
+                  </div>
+                  <div>
                             <span className="text-gray-500 inline-flex items-center">
                               <FaClock className="mr-1 h-3 w-3" /> Frequency:
                             </span>
-                            <span className="ml-1 text-gray-900">{prescription.frequency}</span>
-                          </div>
-                          <div>
+                    <span className="ml-1 text-gray-900">{prescription.frequency}</span>
+                  </div>
+                  <div>
                             <span className="text-gray-500 inline-flex items-center">
                               <FaCalendarPlus className="mr-1 h-3 w-3" /> Start:
                             </span>
-                            <span className="ml-1 text-gray-900">{prescription.startDate}</span>
-                          </div>
-                          <div>
+                    <span className="ml-1 text-gray-900">{prescription.startDate}</span>
+                  </div>
+                  <div>
                             <span className="text-gray-500 inline-flex items-center">
                               <FaCalendarMinus className="mr-1 h-3 w-3" /> End:
                             </span>
-                            <span className="ml-1 text-gray-900">{prescription.endDate || 'Ongoing'}</span>
-                          </div>
-                        </div>
+                    <span className="ml-1 text-gray-900">{prescription.endDate || 'Ongoing'}</span>
+                  </div>
+                </div>
                         
-                        {prescription.notes && (
-                          <div className="mt-3 pt-3 border-t border-gray-100">
+                {prescription.notes && (
+                  <div className="mt-3 pt-3 border-t border-gray-100">
                             <p className="text-gray-600 text-sm flex items-start">
                               <FaInfoCircle className="text-gray-400 mr-2 mt-0.5 h-3 w-3 flex-shrink-0" />
                               <span>{prescription.notes}</span>
                             </p>
-                          </div>
-                        )}
+                  </div>
+                )}
                         
                         <div className="mt-4 flex space-x-2">
                           <div className="flex-1">
@@ -2911,7 +2911,7 @@ export default function PatientDashboard() {
                             >
                               <FaInfoCircle className="mr-1.5 h-3 w-3" /> Details
                             </motion.button>
-                          </div>
+              </div>
                           
                           <div className="flex-1">
                             {prescription.isRefillNeeded && (
@@ -2978,8 +2978,8 @@ export default function PatientDashboard() {
                     </div>
                   </div>
                 </motion.div>
-              ))}
-            </div>
+            ))}
+          </div>
           </section>
           
           {/* Prescription History Section */}
@@ -3218,7 +3218,7 @@ export default function PatientDashboard() {
     const wellnessGoals = wellnessData?.goals || [];
     const wellnessMetrics = wellnessData?.metrics || [];
     const recommendations = wellnessData?.recommendations;
-    
+
     return (
       <div className="space-y-6">
         {/* Recommendations Section */}
@@ -3229,7 +3229,7 @@ export default function PatientDashboard() {
             <div className={`bg-gradient-to-br ${recommendations.title.includes('Diet') ? 'from-amber-50 to-orange-50 border-amber-100' : 'from-emerald-50 to-teal-50 border-emerald-100'} rounded-xl p-5 border`}>
               <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100 mb-4">
                 <p className="text-gray-700">{recommendations.summary}</p>
-              </div>
+            </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {recommendations.items.map((item, idx) => (
@@ -3268,21 +3268,21 @@ export default function PatientDashboard() {
                       <div className="flex items-center mb-2">
                         <FaCoffee className="text-amber-600 mr-2" />
                         <span className="text-sm font-medium text-gray-800">Breakfast</span>
-                      </div>
+                </div>
                       <p className="text-sm text-gray-600">{recommendations.dailyPlan.breakfast}</p>
-                    </div>
+                        </div>
                     <div className="p-3 bg-amber-50 rounded-lg">
                       <div className="flex items-center mb-2">
                         <FaUtensils className="text-amber-600 mr-2" />
                         <span className="text-sm font-medium text-gray-800">Lunch</span>
-                      </div>
+                        </div>
                       <p className="text-sm text-gray-600">{recommendations.dailyPlan.lunch}</p>
-                    </div>
+                      </div>
                     <div className="p-3 bg-amber-50 rounded-lg">
                       <div className="flex items-center mb-2">
                         <FaUtensils className="text-amber-600 mr-2" />
                         <span className="text-sm font-medium text-gray-800">Dinner</span>
-                      </div>
+                    </div>
                       <p className="text-sm text-gray-600">{recommendations.dailyPlan.dinner}</p>
                     </div>
                     <div className="p-3 bg-amber-50 rounded-lg">
@@ -3340,34 +3340,34 @@ export default function PatientDashboard() {
             </div>
           </div>
         )}
-        
+            
         {/* Wellness Goals */}
         <div className="mb-8">
           <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-            <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-medium text-gray-800">Health Goals</h3>
               <button className="text-sm text-blue-600 hover:text-blue-800">View All</button>
-            </div>
-            
-            {wellnessGoals.length === 0 ? (
-              <div className="text-center py-6">
-                <p className="text-gray-500">You haven't set any wellness goals yet</p>
-                <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                  Set Your First Goal
-                </button>
               </div>
-            ) : (
-              <div className="space-y-4">
+              
+            {wellnessGoals.length === 0 ? (
+                <div className="text-center py-6">
+                  <p className="text-gray-500">You haven't set any wellness goals yet</p>
+                  <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    Set Your First Goal
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
                 {wellnessGoals.map((goal, index) => (
-                  <div key={index} className="bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-lg ${goal.completed ? 'bg-green-100 dark:bg-green-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
-                        {goal.completed ? (
+                    <div key={index} className="bg-white p-3 rounded-lg shadow-sm border border-gray-100">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-lg ${goal.completed ? 'bg-green-100 dark:bg-green-900/30' : 'bg-blue-100 dark:bg-blue-900/30'}`}>
+                          {goal.completed ? (
                           <FaCheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                        ) : (
+                          ) : (
                           <FaChartBar className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                        )}
-                      </div>
+                          )}
+                        </div>
                       <div className="flex-1">
                         <div className="flex justify-between">
                           <h4 className="font-medium text-gray-800">{goal.name}</h4>
@@ -3378,16 +3378,16 @@ export default function PatientDashboard() {
                             className={`h-full rounded-full ${goal.completed ? 'bg-green-500' : 'bg-blue-500'}`} 
                             style={{ width: `${Math.min(100, (goal.current_value / goal.target_value) * 100)}%` }}
                           ></div>
-                        </div>
+                      </div>
+                      </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        
+          
         {/* Health Metrics */}
         <div className="mb-8">
           <div className="bg-gray-50 rounded-xl p-5 shadow-sm border border-gray-100">
@@ -3408,10 +3408,10 @@ export default function PatientDashboard() {
                 {wellnessMetrics.slice(0, 5).map((metric, index) => (
                   <div key={index} className="bg-white p-3 rounded-lg shadow-sm border border-gray-100">
                     <div className="flex justify-between items-start">
-                      <div>
+                        <div>
                         <h4 className="font-medium text-gray-800">{metric.metric_type}</h4>
                         <span className="text-lg font-semibold text-gray-900">{metric.metric_value}</span>
-                      </div>
+                        </div>
                       <div>
                         <p className="text-xs text-gray-500">{new Date(metric.recorded_date).toLocaleDateString()}</p>
                       </div>
