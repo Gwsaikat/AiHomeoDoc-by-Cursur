@@ -21,10 +21,10 @@ const nextConfig = {
   // Output for compatibility with Netlify
   output: 'standalone',
   
-  // Configure experimental features properly
+  // Updated experimental features for Next.js 15
   experimental: {
-    // Configure proper server actions setup
-    serverComponentsExternalPackages: [],
+    // Use serverExternalPackages instead of serverComponentsExternalPackages
+    serverExternalPackages: [],
     serverActions: {
       bodySizeLimit: '2mb'
     }
@@ -38,10 +38,37 @@ const nextConfig = {
   
   // Webpack configuration for proper module resolution
   webpack: (config) => {
-    // Add TailwindCSS resolution
+    // Handle TailwindCSS manually to avoid module resolution issues
     config.resolve.alias = {
       ...config.resolve.alias,
     };
+    
+    // Add TailwindCSS to PostCSS config directly
+    const postCssLoaderOptions = {
+      postcssOptions: {
+        plugins: [
+          ['postcss-preset-env', { stage: 3 }],
+          ['autoprefixer'],
+          ['tailwindcss']
+        ],
+      },
+    };
+    
+    // Find the PostCSS loader and update its options
+    const rules = config.module.rules;
+    rules.forEach(rule => {
+      if (rule.oneOf) {
+        rule.oneOf.forEach(oneOfRule => {
+          if (oneOfRule.use && Array.isArray(oneOfRule.use)) {
+            oneOfRule.use.forEach(loader => {
+              if (loader.loader && loader.loader.includes('postcss-loader')) {
+                loader.options = postCssLoaderOptions;
+              }
+            });
+          }
+        });
+      }
+    });
     
     // Reduce NextJS Fonts size warnings
     config.performance = {

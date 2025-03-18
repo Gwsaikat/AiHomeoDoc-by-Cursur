@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && npm install --no-save --save-dev tailwindcss@3.4.1 postcss@8.4.35 autoprefixer@10.4.18 && npm run build"
+  command = "npm ci && node netlify-build.js"
   publish = ".next"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ./package-lock.json"
 
@@ -9,6 +9,11 @@
   NPM_FLAGS = "--legacy-peer-deps"
   # Remove development mode to enable standard production build
   NEXT_TELEMETRY_DISABLED = "1"
+  # Debug environment variables
+  NODE_ENV = "production"
+  DEBUG = "true"
+  # Force Node to use the project's node_modules
+  NODE_PATH = "./node_modules"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
