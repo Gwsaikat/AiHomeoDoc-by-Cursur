@@ -7,6 +7,8 @@
   NODE_VERSION = "20"
   # Using Edge runtime for Next.js
   NEXT_PRIVATE_TARGET = "server"
+  # Enforce development mode for the build (no client-side rendering during build)
+  NODE_ENV = "development"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

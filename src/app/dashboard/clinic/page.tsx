@@ -1,17 +1,39 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase';
 import { motion } from 'framer-motion';
 import { FaHospital, FaUserMd, FaUserInjured, FaCalendarAlt, FaProcedures, FaMoneyBillWave } from 'react-icons/fa';
+
+// Conditionally import Supabase only on the client side
+let supabase: any = null;
+
+// We need to ensure environment variables are present
+const isMissingEnvVars = 
+  typeof process.env.NEXT_PUBLIC_SUPABASE_URL !== 'string' || 
+  typeof process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== 'string';
+
+// Initialize on client side only
+if (typeof window !== 'undefined' && !isMissingEnvVars) {
+  import('@/utils/supabase').then(({ supabase: clientSupabase }) => {
+    supabase = clientSupabase;
+  });
+}
 
 export default function ClinicDashboard() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getUserProfile = async () => {
       try {
+        // Check if we're in the browser and if Supabase is initialized
+        if (typeof window === 'undefined' || !supabase) {
+          // We're either server-side or Supabase isn't ready
+          setTimeout(getUserProfile, 100); // Try again in 100ms
+          return;
+        }
+
         const { data: { user } } = await supabase.auth.getUser();
         
         if (user) {
@@ -20,18 +42,41 @@ export default function ClinicDashboard() {
         }
       } catch (error) {
         console.error('Error fetching user:', error);
+        setError('Unable to load user data. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    getUserProfile();
+    if (typeof window !== 'undefined') {
+      getUserProfile();
+    } else {
+      // If we're server-side during prerendering, just set loading to false
+      setLoading(false);
+    }
   }, []);
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="bg-white p-8 rounded-xl shadow-lg max-w-md">
+          <h2 className="text-xl font-bold text-red-600 mb-4">Error Loading Dashboard</h2>
+          <p className="text-gray-600">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700"
+          >
+            Try Again
+          </button>
+        </div>
       </div>
     );
   }

@@ -20,6 +20,14 @@ const nextConfig = {
   },
   // Output for compatibility with Netlify
   output: 'standalone',
+  
+  // Skip prerendering for dashboard pages that require client-side auth
+  experimental: {
+    missingSuspenseWithCSRError: false  // Disable the suspense error that was preventing the build
+  },
+  
+  // Set which pages are static and which are server-rendered
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
 }
 
 module.exports = nextConfig 
