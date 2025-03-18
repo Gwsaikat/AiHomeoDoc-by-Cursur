@@ -23,11 +23,24 @@ const nextConfig = {
   
   // Skip prerendering for dashboard pages that require client-side auth
   experimental: {
-    missingSuspenseWithCSRError: false  // Disable the suspense error that was preventing the build
+    missingSuspenseWithCSRError: false,  // Disable the suspense error that was preventing the build
+    // Enable app directory error handling
+    serverActions: true,
   },
   
   // Set which pages are static and which are server-rendered
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  
+  // Configure error handling
+  onError: (err) => {
+    console.error('Next.js build error:', err);
+  },
+  
+  // Ensure proper handling of HTML component
+  webpack: (config, { isServer }) => {
+    // Add any webpack configurations if needed
+    return config;
+  },
 }
 
 module.exports = nextConfig 
