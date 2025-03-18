@@ -23,8 +23,7 @@ const nextConfig = {
   
   // Updated experimental features for Next.js 15
   experimental: {
-    // Use serverExternalPackages instead of serverComponentsExternalPackages
-    serverExternalPackages: [],
+    // Removed invalid serverExternalPackages key
     serverActions: {
       bodySizeLimit: '2mb'
     }
